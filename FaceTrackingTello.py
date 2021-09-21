@@ -14,13 +14,12 @@ while True:
         startcounter = 1
 
     img = telloGetFrame(issa, b, h)
+    img, info = findFace(img)
+
+    print(info[0][0])
 
     cv2.imshow("Frame", img)
     if cv2.waitKey(1) & 0xFF == ord("q"):
         issa.land()
         break
-
-    img, info = findFace(img)
-    print(info[0][0])
-
-    pError = trackFace(info, b, pid, pError)
+pError = trackFace(info, b, pid, pError)

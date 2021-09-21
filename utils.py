@@ -48,7 +48,8 @@ def findFace(img):
 def trackFace(issa, info, b, pid, pError):
 
     error = info[0][0] - b // 2
-    speed = pid[0] * error + pid[1] * (error-pError), np.CLIP(-100, 100)
+    speed = pid[0] * error + pid[1] * (error-pError)
+    speed = np.CLIP(-100, 100)
     print(speed)
 
     if info[0][0] != 0:
