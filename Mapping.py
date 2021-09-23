@@ -34,7 +34,7 @@ def getKeyboardInput():
         d = dinterval
         a = - 180
     elif kp.getkey("RIGHT"):
-        lr = speed
+        lr = speedeeeee
         d = - dinterval
         a = 180
 
