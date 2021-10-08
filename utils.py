@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 
-def initializeTello():
+def initializeIssa():
     issa = Tello()
     issa.connect()
     issa.for_back_velocity = 0
@@ -17,7 +17,7 @@ def initializeTello():
     return issa
 
 
-def telloGetFrame(issa, b = 360, h = 240):
+def issaGetFrame(issa, b=360, h=240):
     bild = issa.get_frame_read()
     bild = bild.frame
     img = cv2.resize(bild, (b, h))

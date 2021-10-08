@@ -1,9 +1,11 @@
 from djitellopy import tello
 import numpy as np
 import KeyPressModule as kp
+import time
 from time import sleep
 import cv2
 import math
+
 
 fSpeed = 117 / 10
 aSpeed = 360 / 10
@@ -21,7 +23,7 @@ hasbulla = tello.Tello()
 hasbulla.connect()
 print(hasbulla.get_battery())
 points = [(0, 0), (0, 0)]
-
+hasbulla.streamon()
 
 def getKeyboardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
@@ -64,6 +66,11 @@ def getKeyboardInput():
     if kp.getkey("e"):
         hasbulla.takeoff()
 
+    if kp.getkey("z"):
+
+        cv2.imwrite('Recourses/Images/Bild.jpg', stream)
+        time.sleep(0.3)
+
     sleep(interval)
     a += yaw
     x += int(d * math.cos(math.radians(a)))
@@ -80,13 +87,16 @@ def drawPoints(img, points):
     cv2.putText(img, f'({(points[-1][0] - 500) / 100}, {(points[-1][1] - 500) / 100}) m',
                 (points[-1][0] + 10, points[-1][1] + 30), cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 255), 1)
 
-
 while True:
+
+    stream = hasbulla.get_frame_read().frame
+    stream = cv2.resize(stream, (550, 450))
     value = getKeyboardInput()
     hasbulla.send_rc_control(value[0], value[1], value[2], value[3])
     if points[-1][0] != value[4] or points[-1][1] != value[5]:
         points.append((value[4], value[5]))
     img = np.zeros((1000, 1000, 3), np.uint8)
     drawPoints(img, points)
-    cv2.imshow("Output", img)
+    cv2.imshow("Mapping", img)
+    cv2.imshow("Stream", stream)
     cv2.waitKey(1)
