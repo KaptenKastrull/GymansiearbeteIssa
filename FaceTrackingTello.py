@@ -1,7 +1,7 @@
 from utils import *
 import cv2
 
-issa = initializeTello()
+issa = initializeIssa()
 b = 640
 h = 480
 pid = [0.5, 0.5, 0]
@@ -13,7 +13,7 @@ while True:
         issa.takeoff()
         startcounter = 1
 
-    img = telloGetFrame(issa, b, h)
+    img = issaGetFrame(issa, b, h)
     img, info = findFace(img)
 
     print(info[0][0])
